@@ -29,5 +29,5 @@ public class FilmInstance {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<FilmInstance> filmInstances;
+    private List<Seat> seats;
 }
