@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class FilmInstanceRestController {
         System.out.println(film);
         System.out.println(cinemaHall);
 
-        filmInstanceService.save(filmInstance);
+        filmInstanceService.create(filmInstance);
 
 
 
@@ -64,7 +66,7 @@ public class FilmInstanceRestController {
         filmInstance.setCinemaHall(cinemaHall);
         filmInstance.setDate(filmInstanceDTO.getDate());
 
-        filmInstanceService.save(filmInstance);
+        filmInstanceService.update(filmInstance);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 
@@ -76,6 +78,7 @@ public class FilmInstanceRestController {
     }
 
     @DeleteMapping
+    @Transactional
     public void deleteFilmInstanceById(@RequestParam(name="id")Long id){
         filmInstanceService.deleteFilmInstanceById(id);
     }
