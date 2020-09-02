@@ -5,6 +5,7 @@ import com.adimustbefunny.cinema.repository.FilmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 @Service
@@ -31,4 +32,7 @@ public class FilmRestService {
     }
 
 
+    public List<Film> findAllFilms() {
+        return filmRepository.findAll();
+    }
 }

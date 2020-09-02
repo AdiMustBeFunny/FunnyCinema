@@ -6,9 +6,11 @@ import com.adimustbefunny.cinema.repository.FilmInstanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,4 +54,33 @@ public class FilmInstanceService {
         seatService.deleteSeatByFilmInstanceId(id);
         filmInstanceRepository.deleteById(id);
     }
+
+    public List<FilmInstance> findAllFilmInstances() {
+        return filmInstanceRepository.findAll();
+    }
+
+    public List<FilmInstance> findAllFilmInstancesOverlappingWithGivenFilmInstance(FilmInstance filmInstance){
+
+        System.out.println(filmInstance.getDate());
+        System.out.println(filmInstance.getDate().plusMinutes(filmInstance.getFilm().getDuration()));
+
+        LocalDateTime startTime = filmInstance.getDate();
+        LocalDateTime endTime = filmInstance.getDate().plusMinutes(filmInstance.getFilm().getDuration());
+
+        List<FilmInstance> filmInstancesInTheSameCinemaHall = filmInstanceRepository.findByCinemaHall(filmInstance.getCinemaHall());
+
+        System.out.println(filmInstancesInTheSameCinemaHall);
+
+        return filmInstancesInTheSameCinemaHall.stream().filter(filmInstanceEntry -> {
+            return (
+                    filmInstanceEntry.getDate().isBefore(startTime) &&
+                            filmInstanceEntry.getDate().plusMinutes(filmInstanceEntry.getFilm().getDuration()).isAfter(startTime)) ||
+                    ((filmInstanceEntry.getDate().isAfter(startTime)||filmInstanceEntry.getDate().isEqual(startTime)) &&
+                            (filmInstanceEntry.getDate().plusMinutes(filmInstanceEntry.getFilm().getDuration()).isBefore(endTime)
+                            ||filmInstanceEntry.getDate().plusMinutes(filmInstanceEntry.getFilm().getDuration()).isEqual(endTime))) ||
+                    (filmInstanceEntry.getDate().isBefore(endTime) &&
+                            filmInstanceEntry.getDate().plusMinutes(filmInstanceEntry.getFilm().getDuration()).isAfter(endTime));
+        }).collect(Collectors.toList());
+    }
+
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Schedule</title>
+</head>
+<body>
+
+<form th:action="@{/filminstance/create}" method="post" th:object="${createFormFilmInstanceDTO}">
+    <select id="film" name="film" th:field="*{filmId}">
+        <th:block th:each="film: ${films}">
+            <option th:value="${film.id}">
+                <th:block th:text="${film.title}"></th:block>
+            </option>
+        </th:block>
+    </select>
+    <select id="cinemaHall" name="cinemaHall" th:field="*{cinemaHallId}">
+        <th:block th:each="cinemaHall: ${cinemaHalls}">
+            <option th:value="${cinemaHall.id}">
+                <th:block th:text="${cinemaHall.title}"></th:block>
+            </option>
+        </th:block>
+    </select>
+    <input id="startDate" type="date" th:field="*{startDate}">
+    <input id="hour" type="number" th:field="*{hour}">
+    <input id="minute" type="number" th:field="*{minute}">
+    <input type="submit" value="Submit">
+
+</form>
+
+</body>
+</html>

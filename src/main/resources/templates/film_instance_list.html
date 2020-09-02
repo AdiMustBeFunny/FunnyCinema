@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Schedule</title>
+</head>
+<body>
+<h3>List of all films</h3>
+
+<table>
+    <thead>
+    <tr>
+        <td>Title</td>
+        <td>Theatre</td>
+        <td>Start Time</td>
+        <td>End Time</td>
+        <td>Duration</td>
+        <td>Actions</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="film:${filmInstances}">
+        <td th:text="${film.filmTitle}"></td>
+        <td th:text="${film.cinemaHallName}"></td>
+        <td th:text="${film.startTime}"></td>
+        <td th:text="${film.endTime}"></td>
+        <td th:text="${film.filmDuration}"></td>
+        <td><a href="#">See inside</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<div th:each="film:${filmInstances}">-->
+<!--    <h5 th:text="${film.filmTitle}"></h5>-->
+<!--    <h5 th:text="${film.cinemaHallName}"></h5>-->
+<!--    <h5 th:text="${film.startTime}"></h5>-->
+<!--    <h5 th:text="${film.endTime}"></h5>-->
+<!--    <h5 th:text="${film.filmDuration}"></h5>-->
+<!--</div>-->
+
+</body>
+</html>

@@ -31,6 +31,8 @@ public class FilmInstanceRestController {
         if(filmInstanceDTO.getCinema_hall_id()==null || filmInstanceDTO.getFilm_id()==null || filmInstanceDTO.getDate() == null)
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
 
+        //we should check if date is overlapping with another's film start date
+
         Film film = filmRestService.getFilmById(filmInstanceDTO.getFilm_id());
         CinemaHall cinemaHall = cinemaHallService.getCinemaHallById(filmInstanceDTO.getCinema_hall_id());
 

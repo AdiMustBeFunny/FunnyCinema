@@ -7,6 +7,7 @@ import com.adimustbefunny.cinema.repository.CinemaHallRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 @Service
@@ -32,4 +33,7 @@ public class CinemaHallService {
         });
     }
 
+    public List<CinemaHall> getAllCinemaHalls() {
+        return cinemaHallRepository.findAll();
+    }
 }
