@@ -1,2 +1,12 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        M.FormSelect.init(document.querySelectorAll('select'))
+        M.Datepicker.init(document.querySelector('.datepicker'))
+        M.Carousel.init(document.querySelectorAll('.carousel'));
+    });
+
+</script>

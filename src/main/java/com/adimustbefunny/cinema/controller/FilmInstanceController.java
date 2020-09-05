@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,7 +35,8 @@ public class FilmInstanceController {
     public String postCreateFormFilmInstance(CreateFormFilmInstanceDTO createFormFilmInstanceDTO){
 
         System.out.println(createFormFilmInstanceDTO);
-
+        LocalDate localDate = LocalDate.parse(createFormFilmInstanceDTO.getStartDate());
+        System.out.println(localDate);
         LocalDateTime dateTime = LocalDateTime.parse(createFormFilmInstanceDTO.getStartDate()+"T"+
                 (createFormFilmInstanceDTO.getHour().toString().length()==1 ? "0"+createFormFilmInstanceDTO.getHour():createFormFilmInstanceDTO.getHour() )+
                 ":"+(createFormFilmInstanceDTO.getMinute().toString().length()==1 ? "0"+createFormFilmInstanceDTO.getMinute():createFormFilmInstanceDTO.getMinute()));
@@ -46,6 +48,8 @@ public class FilmInstanceController {
 
         film = filmRestService.getFilmById(createFormFilmInstanceDTO.getFilmId());
         cinemaHall = cinemaHallService.getCinemaHallById(createFormFilmInstanceDTO.getCinemaHallId());
+
+        System.out.println(cinemaHall);
 
         filmInstance.setDate(dateTime);
         filmInstance.setCinemaHall(cinemaHall);

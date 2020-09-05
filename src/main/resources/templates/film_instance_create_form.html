@@ -3,30 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Film Schedule</title>
+
+    <th:block th:replace="fragments/top-includes"></th:block>
+
 </head>
 <body>
+<th:block th:replace="fragments/navbar"></th:block>
 
-<form th:action="@{/filminstance/create}" method="post" th:object="${createFormFilmInstanceDTO}">
-    <select id="film" name="film" th:field="*{filmId}">
-        <th:block th:each="film: ${films}">
-            <option th:value="${film.id}">
-                <th:block th:text="${film.title}"></th:block>
-            </option>
-        </th:block>
-    </select>
-    <select id="cinemaHall" name="cinemaHall" th:field="*{cinemaHallId}">
-        <th:block th:each="cinemaHall: ${cinemaHalls}">
-            <option th:value="${cinemaHall.id}">
-                <th:block th:text="${cinemaHall.title}"></th:block>
-            </option>
-        </th:block>
-    </select>
-    <input id="startDate" type="date" th:field="*{startDate}">
-    <input id="hour" type="number" th:field="*{hour}">
-    <input id="minute" type="number" th:field="*{minute}">
-    <input type="submit" value="Submit">
 
-</form>
+<!--<form th:action="@{/filminstance/create}" method="post" th:object="${createFormFilmInstanceDTO}">-->
+<!--    <select id="film" name="film" th:field="*{filmId}">-->
+<!--        <th:block th:each="film: ${films}">-->
+<!--            <option th:value="${film.id}">-->
+<!--                <th:block th:text="${film.title}"></th:block>-->
+<!--            </option>-->
+
+<!--        </th:block>-->
+<!--    </select>-->
+<!--    <select id="cinemaHall" name="cinemaHall" th:field="*{cinemaHallId}">-->
+<!--        <th:block th:each="cinemaHall: ${cinemaHalls}">-->
+<!--            <option th:value="${cinemaHall.id}">-->
+<!--                <th:block th:text="${cinemaHall.title}"></th:block>-->
+<!--            </option>-->
+<!--        </th:block>-->
+<!--    </select>-->
+<!--    <input id="startDate" type="date" th:field="*{startDate}">-->
+<!--    <input id="hour" type="number" th:field="*{hour}">-->
+<!--    <input id="minute" type="number" th:field="*{minute}">-->
+<!--    <input type="submit" value="Submit">-->
+
+<!--</form>-->
+
+<div class="row">
+    <div class="col s3"></div>
+    <form class="col s6" th:action="@{/filminstance/create}" method="post" th:object="${createFormFilmInstanceDTO}">
+
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="film" name="film" th:field="*{filmId}">
+                    <th:block th:each="film: ${films}">
+                        <option th:value="${film.id}">
+                            <th:block th:text="${film.title}"></th:block>
+                        </option>
+                    </th:block>
+                </select>
+                <label>Film</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="cinemaHall" name="cinemaHall" th:field="*{cinemaHallId}">
+                    <th:block th:each="cinemaHall: ${cinemaHalls}">
+                        <option th:value="${cinemaHall.id}">
+                            <th:block th:text="${cinemaHall.title}"></th:block>
+                        </option>
+                    </th:block>
+                </select>
+                <label>Cinema Hall</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input  id="date" type="date" class="validate" th:field="*{startDate}" required>
+                <label for="date">Date</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input  id="hour" type="number" class="validate" th:field="*{hour}" required>
+                <label for="hour">Hour</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input  id="minute" type="number" class="validate" th:field="*{minute}" required>
+                <label for="minute">Minute</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 center-align">
+                <input value="Sumbit"  type="submit" class="btn" >
+            </div>
+        </div>
+    </form>
+    <div class="col s3"></div>
+
+</div>
+
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
 
 </body>
 </html>

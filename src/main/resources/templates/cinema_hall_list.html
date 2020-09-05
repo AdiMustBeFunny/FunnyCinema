@@ -3,23 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Film Schedule</title>
+
+    <th:block th:replace="fragments/top-includes"></th:block>
+
 </head>
 <body>
+<th:block th:replace="fragments/navbar"></th:block>
+
+<a th:href="@{/cinemahall/create}" class="btn">Create new Cinema Hall</a>
+
 <h3>List of all Cinema Halls</h3>
 
 <table>
     <thead>
     <tr>
         <td>Title</td>
+        <td>Seat count</td>
     </tr>
     </thead>
     <tbody>
     <tr th:each="cinemaHall:${cinemaHalls}">
         <td th:text="${cinemaHall.title}"></td>
+        <td th:text="${cinemaHall.seatCount}"></td>
     </tr>
     </tbody>
 </table>
 
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
 
 </body>
 </html>

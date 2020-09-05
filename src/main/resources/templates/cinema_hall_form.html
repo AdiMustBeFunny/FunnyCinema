@@ -3,11 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Cinema Hall form</title>
+
+    <th:block th:replace="fragments/top-includes"></th:block>
+
 </head>
 <body>
-<form th:action="@{/cinemahall/create}" method="post" th:object="${cinemaHall}">
-    <input id="title" type="text" th:field="*{title}">
-    <input type="submit" value="Submit">
-</form>
+<th:block th:replace="fragments/navbar"></th:block>
+
+<!--<form th:action="@{/cinemahall/create}" method="post" th:object="${cinemaHall}">-->
+<!--    <input id="title" type="text" th:field="*{title}">-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+
+<div class="row">
+    <div class="col s3"></div>
+    <form class="col s6" th:action="@{/cinemahall/create}" method="post" th:object="${cinemaHall}">
+        <div class="row">
+            <div class="input-field col s12">
+                <input  id="title" type="text" class="validate" th:field="*{title}" required>
+                <label for="title">Title</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input  id="seatCount" type="number" class="validate" th:field="*{seatCount}" required>
+                <label for="seatCount">Seat Count</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 center-align">
+                <input value="Sumbit"  type="submit" class="btn" >
+            </div>
+        </div>
+    </form>
+    <div class="col s3"></div>
+
+</div>
+
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
+
 </body>
 </html>

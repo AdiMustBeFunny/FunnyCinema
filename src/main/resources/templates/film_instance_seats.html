@@ -20,8 +20,13 @@
             integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
             crossorigin="anonymous"></script>
 
+    <th:block th:replace="fragments/top-includes"></th:block>
+
 </head>
-<body><table>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+
+<table>
     <thead>
     <tr>
         <td>Title</td>
@@ -115,6 +120,8 @@
     connect()
 
 </script>
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
 
 </body>
 </html>

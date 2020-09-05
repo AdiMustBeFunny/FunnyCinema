@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Film Schedule</title>
+    <th:block th:replace="fragments/top-includes"></th:block>
+
 </head>
 <body>
+<th:block th:replace="fragments/navbar"></th:block>
+<a th:href="@{/film/create}" class="btn">Create new Film</a>
+
+
+
 <h3>List of all films</h3>
 
 <table>
@@ -24,6 +31,11 @@
     </tbody>
 </table>
 
+
+
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
 
 </body>
 </html>
