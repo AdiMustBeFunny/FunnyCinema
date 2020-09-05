@@ -6,6 +6,7 @@ import com.adimustbefunny.cinema.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 @Service
@@ -29,6 +30,10 @@ public class ClientRestService {
                 return new Client();
             }
         });
+    }
+
+    public List<Client> getAllClients(){
+        return clientRepository.findAll();
     }
 
 }

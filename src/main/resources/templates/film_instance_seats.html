@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Schedule</title>
+
+<style>
+    .seat-container{
+        padding: 10px;
+        display: grid;
+        grid-template-columns: repeat(10,1fr);
+    }
+</style>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"
+            integrity="sha512-5yJ548VSnLflcRxWNqVWYeQZnby8D8fJTmYRLyvs445j1XmzR8cnWi85lcHx3CUEeAX+GrK3TqTfzOO6LKDpdw=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+            integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+            crossorigin="anonymous"></script>
+
+</head>
+<body><table>
+    <thead>
+    <tr>
+        <td>Title</td>
+        <td>Theatre</td>
+        <td>Duration</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${filmInstance.film.title}"></td>
+        <td th:text="${filmInstance.cinemaHall.title}"></td>
+        <td th:text="${filmInstance.film.duration}"></td>
+    </tr>
+    </tbody>
+
+
+</table>
+
+<h3>Select current client</h3>
+<select class="client-select">
+    <th:block th:each="client:${clients}">
+        <option th:value="${client.id}">
+            <th:block th:text="${client.getUsername()}"></th:block>
+        </option>
+    </th:block>
+</select>
+
+<h3>Seats</h3>
+
+<div class="seat-container">
+    <div th:id="${seat.id}" th:each="seat:${seats}">
+        <th:block th:if="${seat.client}">
+        TAKEN
+        </th:block>
+        <th:block th:unless="${seat.client}">
+        FREE
+        </th:block>
+<!--        <h5 th:text="${seat.id}"></h5>-->
+<!--        <h5 th:text="${seat.client}"></h5>-->
+    </div>
+</div>
+
+
+<script>
+    const seat_array = Array.from(document.querySelector('.seat-container').children);
+    const client_select = document.querySelector('.client-select');
+
+    seat_array.forEach(seat=>{
+        seat.addEventListener("click",function(){
+
+            console.log(seat.id)
+            console.log(client_select.value)
+
+            sendToogle(seat.id,client_select.value)
+
+        })
+    })
+
+
+    function connect() {
+        const socket = new SockJS('/connection-endpoint');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/cinema/seats', function (message) {
+                // console.log(JSON.parse(message.body));
+                const messageJSON = JSON.parse(message.body);
+
+                const element = seat_array.filter(elem => elem.id == messageJSON.seatId)[0];
+
+                if (messageJSON.seatIsFree === true) {
+                    // element.classList.remove("taken-color")
+                    // element.classList.add("free-color")
+                    element.innerText = "FREE"
+                }
+                if (messageJSON.seatIsFree === false) {
+                    // element.classList.remove("free-color")
+                    // element.classList.add("taken-color")
+                    element.innerText = "TAKEN"
+                }
+
+            });
+        });
+    }
+
+    function sendToogle(seatId,clientId) {
+        stompClient.send("/app/update", {}, JSON.stringify({'seatId': seatId,'clientId':clientId}));
+    }
+
+    connect()
+
+</script>
+
+</body>
+</html>

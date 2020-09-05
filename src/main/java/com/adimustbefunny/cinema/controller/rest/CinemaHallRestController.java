@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api/cinemahall")
 @RequiredArgsConstructor
-public class CinemaHallController {
+public class CinemaHallRestController {
 
     private final CinemaHallService cinemaHallService;
 

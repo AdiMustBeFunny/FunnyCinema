@@ -12,6 +12,7 @@
     <tr>
         <td>Title</td>
         <td>Theatre</td>
+        <td>Date</td>
         <td>Start Time</td>
         <td>End Time</td>
         <td>Duration</td>
@@ -23,10 +24,11 @@
     <tr th:each="film:${filmInstances}">
         <td th:text="${film.filmTitle}"></td>
         <td th:text="${film.cinemaHallName}"></td>
+        <td th:text="${film.date}"></td>
         <td th:text="${film.startTime}"></td>
         <td th:text="${film.endTime}"></td>
         <td th:text="${film.filmDuration}"></td>
-        <td><a href="#">See inside</a></td>
+        <td><a th:href="@{/filminstance/details(id=${film.id})}">See inside</a></td>
     </tr>
     </tbody>
 </table>

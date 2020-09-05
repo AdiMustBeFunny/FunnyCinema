@@ -1,20 +1,17 @@
 package com.adimustbefunny.cinema.controller;
 
 
-import com.adimustbefunny.cinema.model.CinemaHall;
-import com.adimustbefunny.cinema.model.Film;
-import com.adimustbefunny.cinema.model.FilmInstance;
+import com.adimustbefunny.cinema.model.*;
 import com.adimustbefunny.cinema.model.dto.CreateFormFilmInstanceDTO;
 import com.adimustbefunny.cinema.model.dto.FilmInstanceDetailsDTO;
-import com.adimustbefunny.cinema.service.CinemaHallService;
-import com.adimustbefunny.cinema.service.FilmInstanceService;
-import com.adimustbefunny.cinema.service.FilmRestService;
+import com.adimustbefunny.cinema.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -30,6 +27,8 @@ public class FilmInstanceController {
     private final FilmInstanceService filmInstanceService;
     private final CinemaHallService cinemaHallService;
     private final FilmRestService filmRestService;
+    private final SeatService seatService;
+    private final ClientRestService clientRestService;
 
     @PostMapping(path = "/create")
     public String postCreateFormFilmInstance(CreateFormFilmInstanceDTO createFormFilmInstanceDTO){
@@ -91,13 +90,17 @@ public class FilmInstanceController {
             String endTime = filmInstance.getDate().plusMinutes(filmInstance.getFilm().getDuration()).getHour()+":"+
                     filmInstance.getDate().plusMinutes(filmInstance.getFilm().getDuration()).getMinute();
             String filmTitle = filmInstance.getFilm().getTitle();
+            String date = filmInstance.getDate().getYear()+"-"+filmInstance.getDate().getMonthValue()+"-"+filmInstance.getDate().getDayOfMonth();
             Integer duration = filmInstance.getFilm().getDuration();
+
 
             filmInstanceDetailsDTO.setCinemaHallName(cinemaHallName);
             filmInstanceDetailsDTO.setStartTime(startTime);
             filmInstanceDetailsDTO.setEndTime(endTime);
             filmInstanceDetailsDTO.setFilmTitle(filmTitle);
+            filmInstanceDetailsDTO.setDate(date);
             filmInstanceDetailsDTO.setFilmDuration(duration);
+            filmInstanceDetailsDTO.setId(filmInstance.getId());
 
 
             return filmInstanceDetailsDTO;
@@ -108,6 +111,19 @@ public class FilmInstanceController {
         return "film_instance_list";
     }
 
+    @GetMapping(path = "/details")
+    public String getViewSeats(Model model, @RequestParam(name = "id")Long id){
+
+        FilmInstance filmInstance = filmInstanceService.findFilmInstanceById(id);
+        List<Client> clients = clientRestService.getAllClients();
+        List<Seat> seats = seatService.findSeatsByFilmInstance(filmInstance);
+
+        model.addAttribute("filmInstance",filmInstance);
+        model.addAttribute("clients",clients);
+        model.addAttribute("seats",seats);
+
+        return "film_instance_seats";
+    }
 
 
 }

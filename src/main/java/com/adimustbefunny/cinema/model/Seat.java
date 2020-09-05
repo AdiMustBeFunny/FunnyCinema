@@ -19,5 +19,9 @@ public class Seat {
 
     @JsonIgnore
     @ManyToOne
+    private Client client;
+
+    @JsonIgnore
+    @ManyToOne
     private FilmInstance filmInstance;
 }
