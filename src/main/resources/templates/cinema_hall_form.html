@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema Hall form</title>
+</head>
+<body>
+<form th:action="@{/cinemahall/create}" method="post" th:object="${cinemaHall}">
+    <input id="title" type="text" th:field="*{title}">
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

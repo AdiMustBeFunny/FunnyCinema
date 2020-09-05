@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Schedule</title>
+</head>
+<body>
+<h3>List of all Cinema Halls</h3>
+
+<table>
+    <thead>
+    <tr>
+        <td>Title</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cinemaHall:${cinemaHalls}">
+        <td th:text="${cinemaHall.title}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
