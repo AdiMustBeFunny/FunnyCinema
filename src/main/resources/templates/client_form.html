@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Form</title>
+
+<th:block th:replace="fragments/top-includes"></th:block>
+
+</head>
+<body>
+
+<form th:action="@{/client/create}" method="post" th:object="${client}">
+    <input id="username" type="text" th:field="*{username}">
+    <input id="password" type="text" th:field="*{password}">
+    <input type="submit" value="Submit">
+</form>
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
+</body>
+</html>
