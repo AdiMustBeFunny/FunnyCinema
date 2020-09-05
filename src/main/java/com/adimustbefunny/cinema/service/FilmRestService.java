@@ -35,4 +35,8 @@ public class FilmRestService {
     public List<Film> findAllFilms() {
         return filmRepository.findAll();
     }
+
+    public List<Film> getAllFilms() {
+        return filmRepository.findAll();
+    }
 }
