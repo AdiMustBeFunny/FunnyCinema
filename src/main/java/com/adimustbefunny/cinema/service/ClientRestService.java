@@ -36,4 +36,12 @@ public class ClientRestService {
         return clientRepository.findAll();
     }
 
+    public Client getClientByUSername(String username) {
+        return clientRepository.findByUsername(username).orElseGet(new Supplier<Client>() {
+            @Override
+            public Client get() {
+                return null;
+            }
+        });
+    }
 }

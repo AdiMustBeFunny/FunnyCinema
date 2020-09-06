@@ -10,24 +10,32 @@
 <body>
 <th:block th:replace="fragments/navbar"></th:block>
 
-<a th:href="@{/cinemahall/create}" class="btn">Create new Cinema Hall</a>
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
 
-<h3>List of all Cinema Halls</h3>
+        <a th:href="@{/cinemahall/create}" class="btn">Create new Cinema Hall</a>
 
-<table>
-    <thead>
-    <tr>
-        <td>Title</td>
-        <td>Seat count</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="cinemaHall:${cinemaHalls}">
-        <td th:text="${cinemaHall.title}"></td>
-        <td th:text="${cinemaHall.seatCount}"></td>
-    </tr>
-    </tbody>
-</table>
+        <h3>List of all Cinema Halls</h3>
+
+        <table>
+            <thead>
+            <tr>
+                <td>Title</td>
+                <td>Seat count</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cinemaHall:${cinemaHalls}">
+                <td th:text="${cinemaHall.title}"></td>
+                <td th:text="${cinemaHall.seatCount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s3"></div>
+</div>
+
 
 
 

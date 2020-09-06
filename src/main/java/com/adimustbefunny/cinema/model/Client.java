@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,6 +23,12 @@ public class Client {
     @ToString.Exclude
     @JsonIgnore
     private List<Seat> seats;
+
+    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Authority> authorities = new HashSet<>();
 
     private String username;
     private String password;

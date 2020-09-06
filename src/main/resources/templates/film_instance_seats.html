@@ -5,10 +5,20 @@
     <title>Film Schedule</title>
 
 <style>
+
     .seat-container{
-        padding: 10px;
+        padding: 30px 10px;
         display: grid;
         grid-template-columns: repeat(10,1fr);
+    }
+    .seat{
+
+        padding: 5px;
+        text-align: center;
+        margin: 10px 5px;
+    }
+    .seat:hover{
+        cursor: pointer;
     }
 </style>
 
@@ -23,42 +33,51 @@
     <th:block th:replace="fragments/top-includes"></th:block>
 
 </head>
-<body>
+<body class="blue lighten-5">
 <th:block th:replace="fragments/navbar"></th:block>
 
-<table>
-    <thead>
-    <tr>
-        <td>Title</td>
-        <td>Theatre</td>
-        <td>Duration</td>
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td th:text="${filmInstance.film.title}"></td>
-        <td th:text="${filmInstance.cinemaHall.title}"></td>
-        <td th:text="${filmInstance.film.duration}"></td>
-    </tr>
-    </tbody>
+        <table>
+            <thead>
+            <tr>
+                <td>Title</td>
+                <td>Theatre</td>
+                <td>Duration</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${filmInstance.film.title}"></td>
+                <td th:text="${filmInstance.cinemaHall.title}"></td>
+                <td th:text="${filmInstance.film.duration}"></td>
+            </tr>
+            </tbody>
 
 
-</table>
+        </table>
 
-<h3>Select current client</h3>
-<select class="client-select">
-    <th:block th:each="client:${clients}">
-        <option th:value="${client.id}">
-            <th:block th:text="${client.getUsername()}"></th:block>
-        </option>
-    </th:block>
-</select>
+        <h3>Select current client</h3>
+        <select class="client-select">
+            <th:block th:each="client:${clients}">
+                <option th:value="${client.id}">
+                    <th:block th:text="${client.getUsername()}"></th:block>
+                </option>
+            </th:block>
+        </select>
+        <h3>Seats</h3>
 
-<h3>Seats</h3>
+    </div>
+    <div class="col s3"></div>
 
-<div class="seat-container">
-    <div th:id="${seat.id}" th:each="seat:${seats}">
+</div>
+
+
+<div class="seat-container blue darken-3">
+    <div class="seat blue lighten-3" th:id="${seat.id}" th:each="seat:${seats}">
         <th:block th:if="${seat.client}">
         TAKEN
         </th:block>
@@ -99,13 +118,13 @@
                 const element = seat_array.filter(elem => elem.id == messageJSON.seatId)[0];
 
                 if (messageJSON.seatIsFree === true) {
-                    // element.classList.remove("taken-color")
-                    // element.classList.add("free-color")
+                     element.classList.remove("red")
+                     element.classList.add("blue")
                     element.innerText = "FREE"
                 }
                 if (messageJSON.seatIsFree === false) {
-                    // element.classList.remove("free-color")
-                    // element.classList.add("taken-color")
+                    element.classList.remove("blue")
+                    element.classList.add("red")
                     element.innerText = "TAKEN"
                 }
 

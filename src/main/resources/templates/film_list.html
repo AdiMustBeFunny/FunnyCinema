@@ -8,28 +8,37 @@
 </head>
 <body>
 <th:block th:replace="fragments/navbar"></th:block>
-<a th:href="@{/film/create}" class="btn">Create new Film</a>
+
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
+
+        <a th:href="@{/film/create}" class="btn">Create new Film</a>
 
 
 
-<h3>List of all films</h3>
+        <h3>List of all films</h3>
 
-<table>
-    <thead>
-    <tr>
-        <td>Title</td>
-        <td>Description</td>
-        <td>Duration</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="film:${films}">
-        <td th:text="${film.title}"></td>
-        <td th:text="${film.description}"></td>
-        <td th:text="${film.duration}"></td>
-    </tr>
-    </tbody>
-</table>
+        <table>
+            <thead>
+            <tr>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Duration</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="film:${films}">
+                <td th:text="${film.title}"></td>
+                <td th:text="${film.description}"></td>
+                <td th:text="${film.duration}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s3"></div>
+</div>
+
 
 
 
