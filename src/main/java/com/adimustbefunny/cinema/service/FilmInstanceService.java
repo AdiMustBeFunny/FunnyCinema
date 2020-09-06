@@ -6,6 +6,7 @@ import com.adimustbefunny.cinema.repository.FilmInstanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,10 @@ public class FilmInstanceService {
                     (filmInstanceEntry.getDate().isBefore(endTime) &&
                             filmInstanceEntry.getDate().plusMinutes(filmInstanceEntry.getFilm().getDuration()).isAfter(endTime));
         }).collect(Collectors.toList());
+    }
+
+    public List<FilmInstance> findFilmInstancesBetweenDates(LocalDateTime startDate,LocalDateTime endDate){
+        return filmInstanceRepository.findByDateBetween(startDate,endDate);
     }
 
 }

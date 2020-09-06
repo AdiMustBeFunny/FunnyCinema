@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinemax</title>
+
+    <th:block th:replace="fragments/top-includes"></th:block>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+
+<style>
+
+    .cinema-title{
+        /*position: fixed;*/
+        /*left: 50%;*/
+        /*top: 50%;*/
+        z-index: 5;
+    }
+
+    .overlay{
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        background-color: rgba(1,1,1,.2);
+    }
+</style>
+
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+
+<div class="row  blue lighten-4">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
+        <h2>Featured Films</h2>
+        <div class="splide" style="margin-top: 50px; margin-bottom: 50px;">
+            <div class="splide__track">
+                <ul class="splide__list" style="height: 500px; ">
+                    <li th:each="film:${films}" class="splide__slide" style="display: flex;align-items: center;justify-content: center;">
+                        <span class="cinema-title" th:text="${film.title}" style="font-size: 32px; z-index:2;"></span>
+
+                        <div class="splide__slide__container">
+                            <img class="rnd_image"  >
+
+                        </div>
+
+                    </li>
+                    <div class="overlay"></div>
+                </ul>
+            </div>
+
+            <div class="splide__progress">
+                <div class="splide__progress__bar">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col s3"></div>
+</div>
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
+        <h2>Films that will be played in a week time</h2>
+        <table>
+            <thead>
+            <tr>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Date</td>
+                <td>Duration</td>
+                <td>Actions</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="film:${filmInstances}">
+                <td th:text="${film.film.title}"></td>
+                <td th:text="${film.film.description}"></td>
+                <td th:text="${film.date}"></td>
+                <td th:text="${film.film.duration}"></td>
+                <td><a th:href="@{/filminstance/details(id=${film.id})}">See inside</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s3"></div>
+
+</div>
+
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+<script>
+    var splide = new Splide( '.splide' );
+
+    splide.on( 'autoplay:playing', function ( rate ) {
+        console.log( rate ); // 0-1
+    } );
+
+    splide.mount();
+
+    function next_slide() {
+
+        if(splide.index == splide.length - 1)
+            splide.go('0')
+        else
+            splide.go('+1')
+        setTimeout(next_slide,3000)
+    }
+    setTimeout(next_slide,3000)
+
+    document.querySelectorAll('.rnd_image').forEach(element=> {
+        const rnd_image = "https://source.unsplash.com/random/500x450?sig="+Math.floor((Math.random() * 10000) + 1);
+        element.src = rnd_image;
+    })
+
+
+</script>
+
+</body>
+</html>

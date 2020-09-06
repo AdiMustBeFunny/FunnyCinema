@@ -13,5 +13,5 @@ public interface FilmInstanceRepository extends JpaRepository<FilmInstance,Long>
     List<FilmInstance> findByCinemaHall(CinemaHall cinemaHall);
 //    @Query("SELECT f FROM FilmInstance WHERE f.")
 //    List<FilmInstance> findByCinemaHallAndDateBetween(CinemaHall cinemaHall, LocalDateTime start,LocalDateTime end);
-
+    List<FilmInstance> findByDateBetween(LocalDateTime start,LocalDateTime end);
 }
