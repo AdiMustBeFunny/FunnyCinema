@@ -22,7 +22,13 @@ public class LoginController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(HttpSession session) {
+
+        if(session.getAttribute("userId")!=null){
+            System.out.println("User is already logged in");
+            return "redirect:/";
+        }
+
         return "login";
     }
 
@@ -35,11 +41,12 @@ public class LoginController {
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(SessionStatus session) {
+    public String logout(SessionStatus sessionStatus,HttpSession session) {
 
         SecurityContextHolder.getContext().setAuthentication(null);
 
-        session.setComplete();
+        session.removeAttribute("userId");
+        sessionStatus.setComplete();
 
         return "redirect:/login";
 

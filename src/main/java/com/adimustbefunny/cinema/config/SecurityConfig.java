@@ -57,8 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/doLogout").logoutSuccessUrl("/logout").permitAll()
                 .and()
-                .csrf().disable();
-//                .authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/client/**").hasRole("ADMIN")
+                .antMatchers("/film/**").hasRole("ADMIN")
+                .antMatchers("/filminstance/list").hasRole("ADMIN")
+                .antMatchers("/cinemahall/**").hasRole("ADMIN")
+                .antMatchers("/filminstance/details").hasRole("USER")
+                .and().exceptionHandling().accessDeniedPage("/");
+
 //                .anyRequest().authenticated()
 //                .and()
 //                .httpBasic();

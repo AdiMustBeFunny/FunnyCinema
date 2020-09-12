@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -116,7 +117,7 @@ public class FilmInstanceController {
     }
 
     @GetMapping(path = "/details")
-    public String getViewSeats(Model model, @RequestParam(name = "id")Long id){
+    public String getViewSeats(Model model, @RequestParam(name = "id")Long id, HttpSession session){
 
         FilmInstance filmInstance = filmInstanceService.findFilmInstanceById(id);
         List<Client> clients = clientRestService.getAllClients();
@@ -125,7 +126,7 @@ public class FilmInstanceController {
         model.addAttribute("filmInstance",filmInstance);
         model.addAttribute("clients",clients);
         model.addAttribute("seats",seats);
-
+        model.addAttribute("userId",session.getAttribute("userId"));
         return "film_instance_seats";
     }
 
