@@ -2,6 +2,7 @@ package com.adimustbefunny.cinema.controller;
 
 
 import com.adimustbefunny.cinema.model.*;
+import com.adimustbefunny.cinema.model.dto.CheckoutDTO;
 import com.adimustbefunny.cinema.model.dto.CreateFormFilmInstanceDTO;
 import com.adimustbefunny.cinema.model.dto.FilmInstanceDetailsDTO;
 import com.adimustbefunny.cinema.service.*;
@@ -130,5 +131,37 @@ public class FilmInstanceController {
         return "film_instance_seats";
     }
 
+    @GetMapping(path = "/checkout")
+    public String getCheckout(Model model, @RequestParam(name="filminstanceId")Long filminstanceId,
+                              @RequestParam(name="clientId")Long clientId){
 
+        Client client = clientRestService.getClientById(clientId);
+        List<Seat> seats = seatService.findSeatsByClientId(client);
+        FilmInstance filmInstance = filmInstanceService.findFilmInstanceById(filminstanceId);
+
+        model.addAttribute("client",client);
+        model.addAttribute("seats",seats);
+        model.addAttribute("filmInstance",filmInstance);
+        model.addAttribute("totalPrice",seats.size()*5);
+        CheckoutDTO checkoutDTO = new CheckoutDTO(clientId,filminstanceId);
+        model.addAttribute("checkoutDTO",checkoutDTO);
+
+        return "checkout";
+    }
+
+    @PostMapping(path = "/checkout")
+    public String postCheckout(CheckoutDTO checkoutDTO){
+
+        List<Seat> seats = seatService.findSeatsByClientId(clientRestService.getClientById(checkoutDTO.getClientId()));
+        seats.forEach(seat -> seat.setBought(true));
+        seatService.saveMany(seats);
+
+        return "redirect:/filminstance/scam";
+    }
+
+    @GetMapping(path = "/scam")
+    public String getScam(){
+
+        return "scam";
+    }
 }

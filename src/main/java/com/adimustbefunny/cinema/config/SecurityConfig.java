@@ -64,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/filminstance/list").hasRole("ADMIN")
                 .antMatchers("/cinemahall/**").hasRole("ADMIN")
                 .antMatchers("/filminstance/details").hasRole("USER")
+                .antMatchers("/filminstance/checkout").hasRole("USER")
+                .antMatchers("/filminstance/scam").hasRole("USER")
                 .and().exceptionHandling().accessDeniedPage("/");
 
 //                .anyRequest().authenticated()

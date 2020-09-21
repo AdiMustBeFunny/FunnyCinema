@@ -80,7 +80,8 @@
 
 
 <div class="seat-container blue darken-3">
-    <div class="seat  lighten-3 waves-effect waves-teal" th:classappend="${seat.client} ? red:blue" th:id="${seat.id}" th:each="seat:${seats}">
+    <div class="seat  lighten-3 waves-effect waves-teal" th:classappend="${seat.client}? (${seat.bought}?'grey':((${seat.client.id} == ${userId})?'green':'red')) :'blue'" th:id="${seat.id}" th:each="seat:${seats}">
+<!--        <div class="seat  lighten-3 waves-effect waves-teal" th:classappend="${seat.client} ? red:blue" th:id="${seat.id}" th:each="seat:${seats}">-->
         <th:block th:if="${seat.client}">
         TAKEN
         </th:block>
@@ -92,14 +93,20 @@
     </div>
 </div>
 
+<a  class="btn checkout-btn" th:href="@{/filminstance/checkout(filminstanceId = ${filmInstance.id},clientId = ${userId})}">Checkout</a>
+
 
 <script>
     const seat_array = Array.from(document.querySelector('.seat-container').children);
-    const client_select = document.querySelector('.client-select');
+    // const client_select = document.querySelector('.client-select');
     const client_id = document.querySelector('.client-id').innerHTML;
+    const checkout_btn = document.querySelector('checkout-btn');
 
 
     seat_array.forEach(seat=>{
+
+         console.log(seat.id+' '+client_id)
+
         seat.addEventListener("click",function(){
 
             console.log(seat.id)
@@ -123,15 +130,27 @@
 
                 const element = seat_array.filter(elem => elem.id == messageJSON.seatId)[0];
 
-                if (messageJSON.seatIsFree === true) {
-                     element.classList.remove("red")
-                     element.classList.add("blue")
-                    element.innerText = "FREE"
-                }
-                if (messageJSON.seatIsFree === false) {
-                    element.classList.remove("blue")
-                    element.classList.add("red")
-                    element.innerText = "TAKEN"
+                console.log(messageJSON)
+
+                if(messageJSON.seatIsBought == false){
+
+                    if (messageJSON.seatIsFree === true) {
+                        if(messageJSON.clientId == client_id)
+                            element.classList.remove("green")
+                        else
+                            element.classList.remove('red')
+                        element.classList.add("blue")
+                        element.innerText = "FREE"
+                    }
+                    if (messageJSON.seatIsFree === false) {
+                        element.classList.remove("blue")
+                        if(messageJSON.clientId == client_id)
+                            element.classList.add("green")
+                        else
+                            element.classList.add("red")
+                        element.innerText = "TAKEN"
+                    }
+
                 }
 
             });

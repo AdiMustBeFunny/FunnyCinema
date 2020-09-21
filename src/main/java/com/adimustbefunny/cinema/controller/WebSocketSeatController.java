@@ -38,12 +38,16 @@ public class WebSocketSeatController {
             seatService.save(seat);
 
             seatWebSocketResponseDTO.setSeatIsFree(true);
+            seatWebSocketResponseDTO.setClientId(client.getId());
+            seatWebSocketResponseDTO.setSeatIsBought(seat.getBought());
         }
         else if(seat.getClient() == null){
             seat.setClient(client);
             seatService.save(seat);
 
+            seatWebSocketResponseDTO.setSeatIsBought(seat.getBought());
             seatWebSocketResponseDTO.setSeatIsFree(false);
+            seatWebSocketResponseDTO.setClientId(client.getId());
         }
 
             return seatWebSocketResponseDTO;

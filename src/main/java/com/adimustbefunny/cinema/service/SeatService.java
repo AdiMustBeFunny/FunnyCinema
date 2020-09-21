@@ -1,5 +1,6 @@
 package com.adimustbefunny.cinema.service;
 
+import com.adimustbefunny.cinema.model.Client;
 import com.adimustbefunny.cinema.model.FilmInstance;
 import com.adimustbefunny.cinema.model.Seat;
 import com.adimustbefunny.cinema.repository.SeatRepository;
@@ -43,5 +44,9 @@ public class SeatService {
     }
     public void deleteSeatByFilmInstanceId(Long filmInstanceId){
         seatRepository.deleteByFilmInstanceId(filmInstanceId);
+    }
+
+    public List<Seat> findSeatsByClientId(Client client) {
+        return seatRepository.findByClient(client);
     }
 }

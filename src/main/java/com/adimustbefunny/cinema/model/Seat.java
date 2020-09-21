@@ -21,6 +21,9 @@ public class Seat {
     @ManyToOne
     private Client client;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean bought;
+
     @JsonIgnore
     @ManyToOne
     private FilmInstance filmInstance;

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Schedule</title>
+    <th:block th:replace="fragments/top-includes"></th:block>
+
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6 center-align">
+
+
+
+
+        <h3>Checkout</h3>
+
+        <table>
+            <thead>
+            <tr>
+                <td>Film title</td>
+                <td>Cinema hall</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${filmInstance.film.getTitle()}"></td>
+                <td th:text="${filmInstance.cinemaHall.getTitle()}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="col s3"></div>
+</div>
+
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6">
+        <table>
+            <thead>
+            <tr>
+                <td>Seat count</td>
+                <td>Price</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${seats.size()}"></td>
+                <td th:text="${totalPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s3"></div>
+
+</div>
+
+<form method="post" th:action="@{/filminstance/checkout}" th:object="${checkoutDTO}">
+    <input type="number" th:field="*{clientId}" th:value="${client.id}">
+    <input type="number" th:field="*{filmInstanceId}" th:value="${filmInstance.id}">
+    <input type="submit" value="Pay" class="btn">
+</form>
+
+
+<th:block th:replace="fragments/bottom-includes"></th:block>
+
+</body>
+</html>

@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class SeatWebSocketResponseDTO {
-    private Long seatId;
+@AllArgsConstructor
+public class CheckoutDTO {
     private Long clientId;
-    private Boolean seatIsFree;
-    private Boolean seatIsBought;
+    private Long filmInstanceId;
 }
